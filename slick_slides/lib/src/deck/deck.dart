@@ -155,6 +155,9 @@ class SlideDeckState extends State<SlideDeck> {
         } else if (event is RawKeyDownEvent &&
             event.logicalKey == LogicalKeyboardKey.arrowLeft) {
           _onChangeSlide(-1);
+        } else if (event is RawKeyDownEvent &&
+            event.logicalKey == LogicalKeyboardKey.escape) {
+          _exitPresentation();
         }
         return KeyEventResult.handled;
       },
@@ -258,5 +261,11 @@ class SlideDeckState extends State<SlideDeck> {
         return slideWidget;
       });
     }
+  }
+
+  /// Exits the presentation by popping the route.
+  void _exitPresentation() {
+    if (!mounted) return;
+    Navigator.of(context).maybePop();
   }
 }
