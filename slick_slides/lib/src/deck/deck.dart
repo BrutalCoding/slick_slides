@@ -68,14 +68,17 @@ class SlideDeck extends StatefulWidget {
     required this.slides,
     this.theme = const SlideThemeData.dark(),
     this.size,
-    this.presentationMode = SlideDeckAction.none,
+    this.onSlideChanged,
     this.slideDeckAction = SlideDeckAction.none,
     super.key,
   });
 
   final List<Slide> slides;
   final SlideThemeData theme;
-  final Size size;
+
+  /// Listener that is called when the slide is changed.
+  /// Can be used to determine when to exit the presentation.
+  final void Function(int index)? onSlideChanged;
 
   /// Defaults to [SlideDeckAction.none].
   /// Allows you to control the behavior of the presentation.
@@ -182,6 +185,9 @@ class SlideDeckState extends State<SlideDeck> {
         );
       });
       _index = newIndex;
+
+      // Notify the listener that the slide has changed.
+      widget.onSlideChanged?.call(_index);
     }
   }
 
