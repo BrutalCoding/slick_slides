@@ -48,13 +48,24 @@ class SlideDeck extends StatefulWidget {
   const SlideDeck({
     required this.slides,
     this.theme = const SlideThemeData.dark(),
-    this.size = const Size(1920, 1080),
+    this.size,
     super.key,
   });
 
   final List<Slide> slides;
   final SlideThemeData theme;
   final Size size;
+
+  /// [size] determines the size of the slides.
+  /// We recommend specifying the size of the screen when presenting
+  /// to avoid unexpected results.
+  /// If not specified, this defaults to the size of the screen.
+  ///
+  /// Be aware of potential side effects when there no fixed size is specified.
+  /// A known issue is that the highlighting animation in [ColoredCode]
+  /// may highlight the wrong line(s) when the size of the screen changes
+  /// in either the before or after slides of the animation.
+  final Size? size;
 
   @override
   State<SlideDeck> createState() => SlideDeckState();
@@ -142,6 +153,7 @@ class SlideDeckState extends State<SlideDeck> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = widget.size ?? MediaQuery.of(context).size;
     if (_index >= widget.slides.length) {
       _index = widget.slides.length - 1;
     }
@@ -168,15 +180,15 @@ class SlideDeckState extends State<SlideDeck> {
           color: Colors.black,
           child: Center(
             child: AspectRatio(
-              aspectRatio: widget.size.aspectRatio,
+              aspectRatio: size.aspectRatio,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
                   FittedBox(
                     fit: BoxFit.contain,
                     child: SizedBox(
-                      width: widget.size.width,
-                      height: widget.size.height,
+                      width: size.width,
+                      height: size.height,
                       child: SlideTheme(
                         data: widget.theme,
                         child: HeroControllerScope(
