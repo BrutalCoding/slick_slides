@@ -102,8 +102,8 @@ class SlideDeckState extends State<SlideDeck> {
 
   @override
   void dispose() {
-    super.dispose();
     _focusNode.dispose();
+    super.dispose();
   }
 
   void _onChangeSlide(int delta) {
