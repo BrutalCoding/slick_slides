@@ -135,10 +135,10 @@ class SlideDeckState extends State<SlideDeck> {
   }
 
   /// Returns true if the presentation should exit.
-  bool _shouldExitOnSlideChange(int delta, SlideDeckAction presentationMode) {
-    return (presentationMode == SlideDeckAction.exitOnNext && delta > 0) ||
-        (presentationMode == SlideDeckAction.exitOnPrevious && delta < 0) ||
-        (presentationMode == SlideDeckAction.exitOnNextOrPrevious);
+  bool _shouldExitOnSlideChange(int delta, SlideDeckAction slideDeckAction) {
+    return (slideDeckAction == SlideDeckAction.exitOnNext && delta > 0) ||
+        (slideDeckAction == SlideDeckAction.exitOnPrevious && delta < 0) ||
+        (slideDeckAction == SlideDeckAction.exitOnNextOrPrevious);
   }
 
   void _precacheSlide(int index) {
